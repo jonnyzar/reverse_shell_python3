@@ -14,15 +14,21 @@ import socket
 
 
 
-def main(args):
+def main():
+    RHOST = '127.0.0.1'
+    RPORT = 8888
+
     
-    #SOCK_STREAM: TCP
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.sendto(b'MESSAGA', ('127.0.0.1',8888))
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as c:
+        c.connect((RHOST,RPORT)) 
+        c.sendall(b'BIG HI') 
+        resp = c.recv(1024)
     
+    
+    print ('Received: ', repr(data)) 
+ 
     
     return 0
 
 if __name__ == '__main__':
-    import sys
-    sys.exit(main(sys.argv))
+    main()
