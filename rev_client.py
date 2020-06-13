@@ -15,7 +15,8 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #  
-#  
+#  AUTHOR IS NOT RESPONSIBLE FOR ANY CONSEQUENCES CAUSED BY USE
+#  OF THIS PROGRAM
 """
 This is client side which is gonna be controlled by means of 
 reverse shell.

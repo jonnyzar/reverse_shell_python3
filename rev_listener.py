@@ -16,6 +16,8 @@
 #  MA 02110-1301, USA.
 #  
 #
+#  AUTHOR IS NOT RESPONSIBLE FOR ANY CONSEQUENCES CAUSED BY USE
+#  OF THIS PROGRAM
 """
 This is server side or so called "listener".
 Once client is activated it connects to listener that
