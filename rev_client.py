@@ -18,70 +18,33 @@
 #  AUTHOR IS NOT RESPONSIBLE FOR ANY CONSEQUENCES CAUSED BY USE
 #  OF THIS PROGRAM
 """
-This is client side which is gonna be controlled by means of 
-reverse shell.
-Once client is created, he connects to the listener, which controls 
-the reverse shell.
+attacked machine
 """
 import socket
+import sys
 
-
-class Connection_Mgr:
-    
-    def __init__(self):
-        self.c = None    
-    
-
-    def establish_conn(self,RHOST):
-        """
-        this function is to establish a connection to remote listener
-        it runs in loops until it finds connection
-        once found it returns connection object 
-        """
-        
-        while 1:            
-            #connection lifecycle loop
-            self.c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                           
-            try:
-                self.c.connect(RHOST)  
-                print (f"Successful connection at {RHOST}") 
-                return self.c
-                break
-            except ConnectionRefusedError:
-            #if connection refused then wait and retry
-                print ("Connection refused... lets try to reconnect")
-            except KeyboardInterrupt:
-                self.c.close()
-                print ("Excited gracefully")
-                break
-                 
+               
         
 
 def main():
     RADDR = '127.0.0.1'
     RPORT = 8888
     RHOST = (RADDR,RPORT)
-    client_mgr = Connection_Mgr()
-    c = None
     
-    while 1:
-        #client lifecycle loop     
-        #establish connection with RHOST
-        try:            
-            c = client_mgr.establish_conn(RHOST) 
-            if c != None:                    
-                c.sendall(b'BIG HI') 
-                resp = c.recv(1024)   
-                print ('Received: ', repr(data)) 
-        except KeyboardInterrupt:
-            if c != None:
-                c.close()
-            print ("Excited gracefully")
-            break
-            
- 
-    return 0
+    try:
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.connect(RHOST)
+        s.send(b'hi im client\n')
+        while True:            
+            serv_data = s.recv(4096)
+            if not data:
+                continue
+            dec_serv = data.decode('ascii')
+            print(dec_serv)               
+            s.send(b'hi im client\n')
+    finally:
+        s.close()
+
 
 if __name__ == '__main__':
     main()
