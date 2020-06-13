@@ -18,7 +18,7 @@ def main():
     RHOST = '127.0.0.1'
     RPORT = 8888
 
-    
+    #DGRAM : UDP, STREAM: DGRAM
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as c:
         c.connect((RHOST,RPORT)) 
         c.sendall(b'BIG HI') 

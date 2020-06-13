@@ -18,8 +18,11 @@ def main():
     
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.bind((LHOST,LPORT))
-        result = s.recv(1024)
-        print ('Message: ',   result.decode('utf-8'))
+        s.listen(5) #server can work with maximum 5 clients
+        
+        
+        #result = s.recv(1024)
+        #print ('Message: ',   result.decode('utf-8'))
   
     
     return 0
