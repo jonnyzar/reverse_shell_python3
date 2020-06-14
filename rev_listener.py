@@ -27,27 +27,33 @@ import socket
 
 
 def main():
-    LADDR = '127.0.0.1'
-    LPORT = 8888
+    LADDR = '0.0.0.0'
+    LPORT = 8890
     LHOST = (LADDR, LPORT)
     
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.bind(LHOST)
     s.listen(5)
 
-    
-    while True:
-        try:
-            client, addr = s.accept() 
-        except KeyboardInterrupt:
-            s.close()
-            break
-        else:
-            data = client.recv(4096)
-            print(data.decode('utf-8'))    
- 
 
-            
+    try:
+        client, addr = s.accept()      
+        
+        while True:                    
+            cmd = str(input('> '))
+            client.send(cmd.encode())
+            if cmd == 'exit':
+                break
+            fb = client.recv(1024).decode()
+            print(fb)
+    except KeyboardInterrupt:
+        client.close()
+        s.close()  
+    finally: 
+        client.close()
+        s.close()      
+ 
+     
     return 0
 
 if __name__ == '__main__':

